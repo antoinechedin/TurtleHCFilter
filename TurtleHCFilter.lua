@@ -10,6 +10,13 @@ function ChatFrame_OnEvent(event)
 		if HCFSpam == arg1 then
 			return false
 		end
+		
+		--SuperIgnore support
+		if SI_BannedGetIndex(arg2) then
+			TurtleHCFilter_ChatFrame_OnEvent(event)
+			return
+		end
+		
 		local prefix
 		if HCFPrefix == nil then
 			prefix = ""

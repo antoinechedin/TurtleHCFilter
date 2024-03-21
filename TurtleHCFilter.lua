@@ -12,9 +12,11 @@ function ChatFrame_OnEvent(event)
 		end
 		
 		--SuperIgnore support
-		if SI_BannedGetIndex(arg2) then
-			TurtleHCFilter_ChatFrame_OnEvent(event)
-			return
+		if IsAddOnLoaded("SuperIgnore") then
+			if SI_BannedGetIndex(arg2) then
+				TurtleHCFilter_ChatFrame_OnEvent(event)
+				return
+			end
 		end
 		
 		local prefix

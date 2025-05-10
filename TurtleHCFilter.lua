@@ -5,7 +5,15 @@ if HCFColour == nil then HCFColour = "e6cd80" end
 TurtleHCFilter_ChatFrame_OnEvent = ChatFrame_OnEvent
 HCFSpam = ''
 
+function IsHCMessage(text)
+	if (string.find(text, "Minimum level for Hardcore messages is now")) then return true end
+	if (string.find(text, "A tragedy has occurred. Hardcore character")) then return true end
+	if (string.find(text, "has reached level %d%d")) then return true end
+	return false
+end
+
 function ChatFrame_OnEvent(event)
+	local output = nil
 	if (event == "CHAT_MSG_HARDCORE") then
 		if HCFSpam == arg1 then
 			return false
@@ -26,7 +34,15 @@ function ChatFrame_OnEvent(event)
 			prefix = "["..HCFPrefix.."] "
 		end
 		local msg = string.gsub(arg1, "|r", "|r|cff"..HCFColour)
-		local output = "|cff"..HCFColour..prefix.."|cff"..HCFColour.."\124Hplayer:"..arg2.."\124h["..arg2.."]\124h\124r|cff"..HCFColour.." "..msg
+		output = "|cff"..HCFColour..prefix.."|cff"..HCFColour.."\124Hplayer:"..arg2.."\124h["..arg2.."]\124h\124r|cff"..HCFColour.." "..msg
+		HCFSpam = arg1
+	elseif (event == "CHAT_MSG_SYSTEM") then
+		if (IsHCMessage(arg1)) then 
+			output = "|cffffff00" .. arg1
+		end
+	end
+
+	if (output) then
 		if HCFFrame == 1 then
 			ChatFrame1:AddMessage(output)
 		elseif HCFFrame == 2 then
@@ -46,7 +62,6 @@ function ChatFrame_OnEvent(event)
 		elseif HCFFrame == 9 then
 			ChatFrame9:AddMessage(output)
 		end
-		HCFSpam = arg1
 		return false
 	end
 	TurtleHCFilter_ChatFrame_OnEvent(event);

@@ -8,7 +8,8 @@ HCFSpam = ''
 function IsHCMessage(text)
 	if (string.find(text, "Minimum level for Hardcore messages is now")) then return true end
 	if (string.find(text, "A tragedy has occurred. Hardcore character")) then return true end
-	if (string.find(text, "has reached level %d%d")) then return true end
+	if (string.find(text, "reached level %d%d")) then return true end
+	if (string.find(text, "removed from friends list")) then return true end
 	return false
 end
 
